@@ -1,0 +1,197 @@
+/* General Technical Dashboard Styles */
+
+#liveview {
+  -webkit-transition-property: none;
+  -moz-transition-property: none;
+  -ms-transition-property: none;
+  -o-transition-property: none;
+  transition-property: none;
+  clear: both; 
+}
+
+.nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
+  background-color: #9aca3d;
+}
+
+.box {
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+.box header {
+  padding: 15px 10px 15px 90px;
+  background-color: grey;
+  background-repeat: no-repeat;
+  background-position: 10px center;  
+  color: #fff;
+}
+
+.box.github header {
+  background-color: #a2c7d9;
+  background-image: url(../img/github-icon.png);
+}
+
+.box.twitter header {
+  background-color: #337895;
+  background-image: url(../img/twitter-icon.png);
+}
+
+.box.foursquare header {
+  background-color: #32989a;
+  background-image: url(../img/foursquare-icon.png);  
+}
+
+.box.blog header {
+  background-color: #9aca3d;
+  background-image: url(../img/blog-icon.png);
+}
+
+.box .content {
+  padding: 10px 10px 2px 10px;
+  border-right: solid 1px #ccc;
+  border-bottom: solid 1px #ccc;
+  border-left: solid 1px #ccc;    
+}
+
+.box .content p {
+  margin-bottom: 15px;
+}
+
+.box .content a {
+ font-weight: bold; 
+}
+
+.box .content date {
+  display: block;
+  clear: both;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #747271;
+  text-align: right;
+}
+
+/* Github Activities */
+
+.github img {
+  width: 48px;
+  float: left;
+  margin: 0 10px 5px 0;
+  border: solid 5px #a2c7d9;
+}
+
+.github .details {
+  font-size: 13px;
+  margin: -10px auto -10px 70px !important;
+}
+
+.github .details span {
+  margin-right: 5px;
+}
+
+.github .details .additions {
+  color: green;
+}
+
+.github .details .deletions {
+  color: red;
+}
+
+/* Blog Activties */
+
+.blog h2 {
+  margin: 0 0 10px 0;
+}
+
+.blog p {
+  margin: 10px 0;
+}
+
+/* Twitter Activities */
+
+.twitter img {
+  width: 48px;
+  float: left;
+  margin: 0 10px 5px 0;
+  border: solid 5px #337895;
+}
+
+.twitter .content p {
+  margin-bottom: 5px;
+}
+
+.twitter .actions {
+  margin-left: 70px;
+}
+
+.twitter .actions a {
+  margin-right: 5px;
+}
+
+/* Foursquare Activities */
+
+.foursquare img {
+  width: 48px;
+  float: left;
+  margin: 0 10px 5px 0;
+  border: solid 5px #32989a;
+}
+
+.foursquare .content p {
+  margin-bottom: 5px;
+}
+
+
+/* Misc */
+#load-activities-wrapper {
+  margin-top: 30px;
+}
+
+#load-activities
+{
+  display: block;
+  min-width: 181px;
+  margin: auto;
+  padding: 6px 40px 4px 10px;
+  line-height: 24px;
+  background-color: #9ccb40;
+  background-image: url(../img/button-arrow.png);
+  background-repeat: no-repeat;
+  background-position: 92% center;
+  color: #fff;
+  border: solid 1px #9bbd40;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Masonry */
+
+.masonry,
+.masonry .masonry-brick {
+  -webkit-transition-duration: 0.7s;
+  -moz-transition-duration: 0.7s;
+  -ms-transition-duration: 0.7s;
+  -o-transition-duration: 0.7s;
+  transition-duration: 0.7s;
+}
+
+.masonry {
+  -webkit-transition-property: height, width;
+  -moz-transition-property: height, width;
+  -ms-transition-property: height, width;
+  -o-transition-property: height, width;
+  transition-property: height, width;
+}
+
+.masonry .masonry-brick {
+  -webkit-transition-property: left, right, top;
+  -moz-transition-property: left, right, top;
+  -ms-transition-property: left, right, top;
+  -o-transition-property: left, right, top;
+  transition-property: left, right, top;
+}
+
+#page-nav {
+  display: none;
+}

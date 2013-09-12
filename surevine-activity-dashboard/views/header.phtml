@@ -1,0 +1,60 @@
+<script src="<?php echo get_option('surevine-technical-dashboard-service'); ?>/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  
+  var $container = $('#liveview');
+
+  $container.masonry({
+    itemSelector: '.box',
+    columnWidth: 5,
+    gutterWidth: 5,
+    isAnimated: true
+  });
+
+  $(".timeago").timeago();
+
+  $container.masonry();
+
+  var socket = io.connect('<?php echo get_option('surevine-technical-dashboard-service'); ?>');
+  socket.on('activity', function (activity) {
+    $('#no-activities').remove();
+    var el = $('<article id="activity-'+activity.id+'" class="box '+activity.size+' '+activity.generator.id+'"><header><h5>'+activity.generator.displayName+'</h5></header><div class="content">'+activity.content+'</div></article>');
+    $container.prepend(el).masonry('prepended', el);
+    $(".timeago").timeago();
+  });
+  
+  // Ajax load old activities
+  $("#load-activities").click(function(){
+    
+    $("#load-activities").button('loading');
+    
+    var oldestActivityID = $("article:last-child", $container).attr('id');
+    var activityXHR = $.get("/wp-admin/admin-ajax.php", { action: 'load_activities', oldest_activity: oldestActivityID })
+    .done(function(data) {
+      
+      var data = JSON.parse(data);
+      $(data.items).each(function(index, activity) {
+        var el = $('<article id="'+activity.id+'" class="box span4 '+activity.generator.id+'"><header><h5>'+activity.generator.displayName+'</h5></header><div class="content">'+activity.content+'</div></article>');
+        $container.append(el).masonry('appended', el, true);
+      });
+      $(".timeago").timeago();
+      $("#load-activities").button('reset');
+
+    })
+    .fail(function(error) {
+
+      if(error.status == "404") {
+        // No more activities, disable load button
+        $("#load-activities").text('No More Activities');
+        $("#load-activities").prop('disabled', true);
+      }
+      
+    });
+    
+  });
+
+});
+
+</script>

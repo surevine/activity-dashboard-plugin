@@ -1,0 +1,20 @@
+<div>
+<h2>Activity Dashboard Options</h2>
+	<form method="post" action="options.php">
+		<?php wp_nonce_field('update-options') ?>
+		
+		<table width="510">
+  		<tr valign="top">
+  		<th width="92" scope="row">Activity Service URL</th>
+    		<td width="406">
+    		  <input name="surevine-technical-dashboard-service" type="text" id="surevine-technical-dashboard-service"
+    		value="<?php echo get_option('surevine-technical-dashboard-service'); ?>" />
+        </td>
+  		</tr>
+		</table>
+		<input type="hidden" name="action" value="update" />
+    <input type="hidden" name="page_options" value="surevine-technical-dashboard-service" />
+		<p><input type="submit" value="<?php _e('Save Changes') ?>" /></p>
+	
+	</form>
+</div>

@@ -1,0 +1,33 @@
+<div class="pill-content">
+
+  <div class="pill-pane active" id="liveview">
+    
+      <?php if (0 === count($params['activities'])) : ?>
+        
+          <p id="no-activities">Sorry there are currently no activities, please check back another time.</p>
+        
+      <?php else : ?>
+        
+          <?php foreach ($params['activities'] as $activity) : ?>
+            
+              <?php
+            
+              $activityData = json_decode($activity->data);
+            
+              if($activityData === NULL) {
+                // Do nothing as json not properly formed / error parsing json
+                continue;
+              }
+            
+              $activityTemplate = file_get_contents(__DIR__.'/activity.phtml');
+              echo $templateEngine->render($activityTemplate, $activityData); // "Hello World!"          
+            
+              ?>
+          
+          <?php endforeach ?>
+        
+      <?php endif ?>
+    
+  </div>
+
+</div>
