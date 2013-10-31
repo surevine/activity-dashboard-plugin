@@ -1,6 +1,6 @@
 /* General Technical Dashboard Styles */
 
-.box {
+article.box {
   margin-bottom: 20px;
   background-color: #fff;
 }
