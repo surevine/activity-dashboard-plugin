@@ -27,7 +27,7 @@ if (true === is_admin()) {
     add_action('admin_menu', array($activityDashboard, 'adminMenu'), 1);
 }
 
-add_action('wp_enqueue_scripts', array($activityDashboard, 'loadScripts'), 1);
+add_action('the_posts', array($activityDashboard, 'isDashboardPage'));
 
 add_action('wp_ajax_load_activities', array($activityDashboard, 'ajax_load_activities'));
 add_action('wp_ajax_nopriv_load_activities', array($activityDashboard, 'ajax_load_activities'));

@@ -71,7 +71,7 @@ class ActivityDashboard
      * Render dashboard
      */
     public function display()
-    {  
+    {       
       $this->loadScripts();
         
       $activities = $this->_database->getActivities($this->initialActivityCount);      
@@ -84,13 +84,12 @@ class ActivityDashboard
     /**
      * Load required scripts / stylesheets
      */
-    public function loadScripts()
+    protected function loadScripts()
     {
       wp_enqueue_style('bootstrap', plugins_url('../assets/css/bootstrap.min.css', __FILE__));
       wp_enqueue_style('bootstrap-responsive', plugins_url('../assets/css/bootstrap-responsive.min.css', __FILE__));
       wp_enqueue_style('activity-dashboard-stylesheet', plugins_url('../assets/css/activity-dashboard.css', __FILE__));
       
-      wp_enqueue_script('jquery');
       wp_enqueue_script('bootstrap', plugins_url('../assets/js/bootstrap.min.js', __FILE__), array('jquery'), false, false);
       wp_enqueue_script('bootstrap-button', plugins_url('../assets/js/bootstrap-button.min.js', __FILE__), array('jquery'), false, false);
       wp_enqueue_script('masonry', plugins_url('../assets/js/masonry.pkgd.min.js', __FILE__), array('jquery'), false, false);
@@ -137,7 +136,7 @@ class ActivityDashboard
     /**
     * Retrieve a batch of activities older than provided activity ID.
     */
-    function ajax_load_activities()
+    public function ajax_load_activities()
     {
         if(!isset($_GET['oldest_activity']) || $_GET['oldest_activity'] == '') {
             // Return 400 BAD REQUEST due to missing parameter
@@ -157,6 +156,25 @@ class ActivityDashboard
         
         $this->render('/views/activitystream.phtml', array('activities' => $activities));
         die();
+    }
+    
+    /**
+     * Detects whether page contains shortcode (indicating that we need to include resources in head)
+     */
+    public function isDashboardPage($posts) {
+        
+        if(empty($posts)) {
+            return $posts;
+        }
+        
+        foreach ($posts as $post) {
+            if(strpos($post->post_content, '[surevine-activity-dashboard]') !== false) {
+                $this->loadScripts();
+                break;
+            }
+        }
+        
+        return $posts;
     }
   
 } 
