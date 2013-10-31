@@ -72,8 +72,12 @@ class ActivityDashboard
     */
     public function display()
     {  
+      wp_enqueue_style('bootstrap', plugins_url('../assets/css/bootstrap.min.css', __FILE__));
+      wp_enqueue_style('bootstrap-responsive', plugins_url('../assets/css/bootstrap-responsive.min.css', __FILE__));
       wp_enqueue_style('activity-dashboard-stylesheet', plugins_url('../assets/css/activity-dashboard.css', __FILE__));
       
+      wp_enqueue_script('jquery');
+      wp_enqueue_script('bootstrap', plugins_url('../assets/js/bootstrap.min.js', __FILE__), false, true);
       wp_enqueue_script('bootstrap-button', plugins_url('../assets/js/bootstrap-button.min.js', __FILE__), false, true);
       wp_enqueue_script('masonry', plugins_url('../assets/js/masonry.pkgd.min.js', __FILE__), false, true);
       wp_enqueue_script('timeago', plugins_url('../assets/js/jquery.timeago.min.js', __FILE__), false, true);

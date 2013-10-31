@@ -137,6 +137,7 @@
 #load-activities
 {
   display: block;
+  clear: both;
   min-width: 181px;
   margin: auto;
   padding: 6px 40px 4px 10px;
