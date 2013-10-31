@@ -71,9 +71,7 @@ class ActivityDashboard
      * Render dashboard
      */
     public function display()
-    {       
-      $this->loadScripts();
-        
+    {               
       $activities = $this->_database->getActivities($this->initialActivityCount);      
       
       $this->render('/views/header.phtml');
