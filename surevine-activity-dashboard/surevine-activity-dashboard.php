@@ -3,7 +3,7 @@
 Plugin Name: Surevine Realtime Activity Dashboard
 Plugin URI: https://github.com/surevine/activity-dashboard-plugin
 Description: A plugin to place a realtime activity dashboard / feed on your website
-Version: 0.1
+Version: 0.1.0
 Author: Surevine Ltd
 Author URI: https://www.surevine.com
 License: GPLv3
