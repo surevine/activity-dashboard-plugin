@@ -85,7 +85,6 @@ class ActivityDashboard
     protected function loadScripts()
     {
       wp_enqueue_style('bootstrap', plugins_url('../assets/css/bootstrap.min.css', __FILE__));
-      wp_enqueue_style('bootstrap-responsive', plugins_url('../assets/css/bootstrap-responsive.min.css', __FILE__));
       wp_enqueue_style('activity-dashboard-stylesheet', plugins_url('../assets/css/activity-dashboard.css', __FILE__));
       
       wp_enqueue_script('bootstrap', plugins_url('../assets/js/bootstrap.min.js', __FILE__), array('jquery'), false, false);
