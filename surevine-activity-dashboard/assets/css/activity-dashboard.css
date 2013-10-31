@@ -13,6 +13,10 @@ article.box {
   color: #fff;
 }
 
+.box header h5 {
+  margin: 10px 0;   
+}
+
 .box.github header {
   background-color: #a2c7d9;
   background-image: url(../img/github-icon.png);
