@@ -15,22 +15,23 @@ class DashboardDatabase implements DashboardDatabaseInterface
 	 */
 	protected $_database;
   
-  /**
-   * Store database table name for activities
-   * 
-   * @var string
-   */
-  protected $_activityTableName;
+    /**
+    * Store database table name for activities
+    * 
+    * @var string
+    */
+    public $_activityTableName;
 	
 	/**
 	 * Constructor
 	 * 
-	 * @param WPDB $db
+	 * @param WPDB $database
+     * @param string $activityTableName
 	 */
 	public function __construct(wpdb $database, $activityTableName)
 	{
 		$this->_database = $database;
-    $this->_activityTableName = $activityTableName;
+        $this->_activityTableName = $activityTableName;
 	}
 	
 	/**
@@ -42,12 +43,12 @@ class DashboardDatabase implements DashboardDatabaseInterface
 	 */
 	public function getActivities($maxItems = 30, $offset = 0)
 	{
-		    $maxItems = (int) $maxItems;
+        $maxItems = (int) $maxItems;
         $offset = (int) $offset;
 
-    		return $this->_database->get_results(
-    		    "SELECT * FROM `{$this->_activityTableName}` ORDER BY `created` DESC LIMIT {$maxItems} OFFSET {$offset} ;"
-    		);   
+        return $this->_database->get_results(
+            "SELECT * FROM `{$this->_activityTableName}` ORDER BY `created` DESC LIMIT {$maxItems} OFFSET {$offset} ;"
+        );   
 	}
   
 	/**
@@ -58,11 +59,9 @@ class DashboardDatabase implements DashboardDatabaseInterface
 	 */
 	public function getActivityById($id)
 	{
-        $id = (int) $id;
-    
-    		return $this->_database->get_row(
-    		    "SELECT * FROM `{$this->_activityTableName}` WHERE `activityId`='{$id}' ;"
-    		);   
+        return $this->_database->get_row(
+            "SELECT * FROM `{$this->_activityTableName}` WHERE `activityId`='{$id}' ;"
+        );   
 	}
   
 	/**
@@ -74,11 +73,11 @@ class DashboardDatabase implements DashboardDatabaseInterface
 	 */
 	public function getActivitiesBefore($created, $maxItems = 30)
 	{
-		    $maxItems = (int) $maxItems;
+        $maxItems = (int) $maxItems;
 
-    		return $this->_database->get_results(
-    		    "SELECT * FROM `{$this->_activityTableName}` WHERE `created` < '{$created}' ORDER BY `created` DESC LIMIT {$maxItems} ;"
-    		);   
+        return $this->_database->get_results(
+            "SELECT * FROM `{$this->_activityTableName}` WHERE `created` < '{$created}' ORDER BY `created` DESC LIMIT {$maxItems} ;"
+        );   
 	}
   
 }

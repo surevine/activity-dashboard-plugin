@@ -1,18 +1,5 @@
 /* General Technical Dashboard Styles */
 
-#liveview {
-  -webkit-transition-property: none;
-  -moz-transition-property: none;
-  -ms-transition-property: none;
-  -o-transition-property: none;
-  transition-property: none;
-  clear: both; 
-}
-
-.nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
-  background-color: #9aca3d;
-}
-
 .box {
   margin-bottom: 20px;
   background-color: #fff;

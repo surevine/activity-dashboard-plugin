@@ -23,7 +23,7 @@ interface DashboardDatabaseInterface
 	 * @param  integer $id
 	 * @return stdClass
 	 */
-  public function getActivityById($id);
+    public function getActivityById($id);
   
 	/**
 	 * Get activities older than a certain threshold

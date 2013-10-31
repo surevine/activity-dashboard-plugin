@@ -8,53 +8,48 @@
 */
 class ActivityDashboard
 {
-	/**
-	 * Database connection
-	 * 
-	 * @var WPDB
-	 */
-	protected $_database;
-	
-	/**
-	 * File path
-	 * 
-	 * @var string
-	 */
-	protected $_filePath;
-  
-  /**
-   * Number of activities to display on dashboard initially
-   *
-   * @var int
-   */
-  // TODO make this configurable
-  protected $initialActivityCount = 20;
-  
-  /**
-   * Number of activities to fetch per 'page' of dashboard
-   *
-   * @var int
-   */
-  // TODO make this configurable  
-  protected $activitiesPerPage = 10;
+    /**
+     * Database wrapper
+     * 
+     * @var DashboardDatabaseInterface
+     */
+    protected $_database;
+    
+    /**
+     * File path
+     * 
+     * @var string
+     */
+    protected $_filePath;
+    
+    /**
+    * Number of activities to display on dashboard initially
+    *
+    * @var int
+    */
+    protected $initialActivityCount = 20;
+    
+    /**
+    * Number of activities to fetch per 'page' of dashboard
+    *
+    * @var int
+    */  
+    protected $activitiesPerPage = 10;
 
-  /**
-   * Instantiate dashboard
-   */
-  public function __construct(DashboardDatabaseInterface $database, $filePath)
-  {
-      $this->_database = $database;
-      $this->_filePath = $filePath;
-      
-      // Setup template engine
-      Mustache_Autoloader::register();
-  }
-  
-  /**
-   * Setup admin options page
-   */
-  public function adminMenu()
-  {
+    public function __construct(DashboardDatabaseInterface $database, $filePath)
+    {
+        $this->_database = $database;
+        $this->_filePath = $filePath;
+        
+        // Setup template engine
+        Mustache_Autoloader::register();
+    }
+    
+    /**
+    * Setup admin options page
+    */
+    public function adminMenu()
+    {
       add_options_page(
           'Activity Dashboard Setup',
           'Activity Dashboard Setup',
@@ -62,78 +57,95 @@ class ActivityDashboard
           'surevine-activity-dashboard',
           array($this, 'optionsPage')
       );
-  }
-  
-  /**
-   * Render admin options page
-   */
-  public function optionsPage()
-  {
-  	$this->render('/views/options-page.phtml');
-  }
-  
-  /**
-   * Render dashboard
-   */
-  public function display()
-  {  
-      wp_register_style('activity-dashboard-stylesheet', plugins_url('assets/css/activity-dashboard.css', __FILE__));
-      wp_enqueue_style('activity-dashboard-stylesheet');
+    }
+    
+    /**
+    * Render admin options page
+    */
+    public function optionsPage()
+    {
+        $this->render('/views/options-page.phtml');
+    }
+    
+    /**
+    * Render dashboard
+    */
+    public function display()
+    {  
+      wp_enqueue_style('activity-dashboard-stylesheet', plugins_url('../assets/css/activity-dashboard.css', __FILE__));
       
-      wp_enqueue_script('bootstrap-button', plugins_url('assets/js/bootstrap-button.min.js', __FILE__), false, true);
-      wp_enqueue_script('masonry', plugins_url('assets/js/masonry.pkgd.min.js', __FILE__), false, true);
-      
-      // TODO package timeago with plugin
-      wp_enqueue_script('timeago');
+      wp_enqueue_script('bootstrap-button', plugins_url('../assets/js/bootstrap-button.min.js', __FILE__), false, true);
+      wp_enqueue_script('masonry', plugins_url('../assets/js/masonry.pkgd.min.js', __FILE__), false, true);
+      wp_enqueue_script('timeago', plugins_url('../assets/js/jquery.timeago.min.js', __FILE__), false, true);
       
       $activities = $this->_database->getActivities($this->initialActivityCount);      
       
       $this->render('/views/header.phtml');
       $this->render('/views/activity-wall.phtml', array('activities' => $activities));
       $this->render('/views/footer.phtml'); 
-  }
-  
-  /**
-   * Activate plugin
-   */
-  public function activate()
-  {
-      add_option("surevine-technical-dashboard-settings", '[]', '', 'yes');
-  }
-  
-  /**
-   * Compile and render template script
-   */
-  protected function render($script, $params = array())
-  {
-    $templateEngine = new Mustache_Engine;
-  	include $this->_filePath . $script;
-  }
-  
-  /**
-   * Retrieve batch of activities older than provided activity ID.
-   */
-  function ajax_load_activities() {
-      
-    if(!isset($_GET['oldest_activity']) || $_GET['oldest_activity'] == '') {
-        // Return 400 BAD REQUEST due to missing parameter
-        header('HTTP', true, 400);
-        die();
     }
     
-    $oldestActivity = $this->_database->getActivityById(mysql_real_escape_string($_GET['oldest_activity']));
-    $activities = $this->_database->getActivitiesBefore($oldestActivity->created, $this->activitiesPerPage);
+    public function activate()
+    {
+        add_option("surevine-technical-dashboard-settings", '[]', '', 'yes');
+        $this->setup_database(); 
+    }
+    
+    /**
+     * Create or update database schema
+     */
+    protected function setup_database()
+    {
+        $table_name = $this->_database->_activityTableName;
+        $create_table_sql = "CREATE TABLE $table_name (
+              `id` int(11) NOT NULL AUTO_INCREMENT,
+              `activityId` varchar(100) NOT NULL,
+              `data` text NOT NULL,
+              `type` varchar(255) NOT NULL,
+              `created` datetime NOT NULL,
+              PRIMARY KEY (`id`)
+            );";
 
-    if(count($activities) == 0) {
-        // Return 404 for no more activities
-        header('HTTP', true, 404);
-        die();
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $create_table_sql );        
+    }        
+    
+    /**
+    * Compile and render template script
+    *
+    * @param string $template path to template to render
+    * @param array $params    
+    */
+    protected function render($template, $params = array())
+    {
+        $templateEngine = new Mustache_Engine;
+        include $this->_filePath . $template;
     }
     
-    $this->render('/views/activitystream.phtml', array('activities' => $activities));
-    die();
-  
-  }
+    /**
+    * Retrieve a batch of activities older than provided activity ID.
+    */
+    function ajax_load_activities()
+    {
+        if(!isset($_GET['oldest_activity']) || $_GET['oldest_activity'] == '') {
+            // Return 400 BAD REQUEST due to missing parameter
+            header('HTTP', true, 400);
+            die();
+        }
+        
+        $oldestActivity = $this->_database->getActivityById(mysql_real_escape_string($_GET['oldest_activity']));
+
+        $activities = $this->_database->getActivitiesBefore($oldestActivity->created, $this->activitiesPerPage);
+        
+        if(count($activities) == 0) {
+            // Return 404 for no more activities
+            header('HTTP', true, 404);
+            die();
+        }
+        
+        $this->render('/views/activitystream.phtml', array('activities' => $activities));
+        die();
+    }
   
 } 
 ?>
