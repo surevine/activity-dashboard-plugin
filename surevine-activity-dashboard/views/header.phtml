@@ -1,4 +1,4 @@
-<script src="<?php echo get_option('surevine-technical-dashboard-service'); ?>/socket.io/socket.io.js"></script>
+<script src="<?php echo get_option('surevine-activity-dashboard-service'); ?>/socket.io/socket.io.js"></script>
 <script type="text/javascript">
 
 jQuery(document).ready(function($) {
@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
 
   $container.masonry();
 
-  var socket = io.connect('<?php echo get_option('surevine-technical-dashboard-service'); ?>');
+  var socket = io.connect('<?php echo get_option('surevine-activity-dashboard-service'); ?>');
   socket.on('activity', function (activity) {
     $('#no-activities').remove();
     var el = $('<article id="activity-'+activity.id+'" class="box '+activity.size+' '+activity.generator.id+'"><header><h5>'+activity.generator.displayName+'</h5></header><div class="content">'+activity.content+'</div></article>');
