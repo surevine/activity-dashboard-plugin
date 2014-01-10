@@ -27,14 +27,15 @@ class ActivityDashboard
     *
     * @var int
     */
-    protected $initialActivityCount = 20;
+    protected $defaultInitialActivityCount = 20;
     
     /**
     * Number of activities to fetch per 'page' of dashboard
     *
     * @var int
     */  
-    protected $activitiesPerPage = 10;
+    protected $defaultActivitiesPerPage = 10;
+  
 
     public function __construct(DashboardDatabaseInterface $database, $filePath)
     {
@@ -51,12 +52,22 @@ class ActivityDashboard
     public function adminMenu()
     {
       add_options_page(
-          'Activity Dashboard Setup',
-          'Activity Dashboard Setup',
+          'Activity Dashboard',
+          'Activity Dashboard',
           'administrator',
           'surevine-activity-dashboard',
           array($this, 'optionsPage')
       );
+    }
+  
+    /**
+     * Add options to page
+     */
+    public function adminSettings()
+    {
+      register_setting( 'surevine-activity-dashboard-options', 'dashboard-service-url' );
+      register_setting( 'surevine-activity-dashboard-options', 'dashboard-initial-activity-count' );
+      register_setting( 'surevine-activity-dashboard-options', 'dashboard-activities-per-page' );
     }
     
     /**
@@ -72,7 +83,7 @@ class ActivityDashboard
      */
     public function display()
     {               
-      $activities = $this->_database->getActivities($this->initialActivityCount);      
+      $activities = $this->_database->getActivities(get_option('dashboard-initial-activity-count', $this->defaultInitialActivityCount));      
       
       $this->render('/views/header.phtml');
       $this->render('/views/activity-wall.phtml', array('activities' => $activities));
@@ -143,7 +154,7 @@ class ActivityDashboard
         
         $oldestActivity = $this->_database->getActivityById(mysql_real_escape_string($_GET['oldest_activity']));
 
-        $activities = $this->_database->getActivitiesBefore($oldestActivity->created, $this->activitiesPerPage);
+        $activities = $this->_database->getActivitiesBefore($oldestActivity->created, get_option('dashboard-activities-per-page', $this->defaultActivitiesPerPage));
         
         if(count($activities) == 0) {
             // Return 404 for no more activities

@@ -1,20 +1,36 @@
-<div>
-<h2>Activity Dashboard Options</h2>
-	<form method="post" action="options.php">
-		<?php wp_nonce_field('update-options') ?>
-		
-		<table width="510">
-  		<tr valign="top">
-  		<th width="92" scope="row">Activity Service URL</th>
-    		<td width="406">
-    		  <input name="surevine-activity-dashboard-service" type="text" id="surevine-activity-dashboard-service"
-    		value="<?php echo get_option('surevine-activity-dashboard-service'); ?>" />
-        </td>
-  		</tr>
-		</table>
-		<input type="hidden" name="action" value="update" />
-        <input type="hidden" name="page_options" value="surevine-activity-dashboard-service" />
-		<p><input type="submit" value="<?php _e('Save Changes') ?>" /></p>
-	
-	</form>
+<div class="wrap">
+  <?php screen_icon(); ?>
+  <h2>Activity Dashboard Options</h2>
+  <form method="post" action="options.php"> 
+    
+    <?php settings_fields( 'surevine-activity-dashboard-options' ); ?>
+    
+    <table class="form-table">
+      
+      <tr valign="top">
+          <th scope="row"><label for="dashboard-service-url">Activity Service URL</label></th>
+          <td>
+            <input name="dashboard-service-url" type="text" id="dashboard-service-url"
+          value="<?php echo get_option('dashboard-service-url'); ?>" class="regular-text" />
+          </td>
+      </tr>
+      <tr valign="top">
+          <th scope="row"><label for="dashboard-initial-activity-count">Initial Activity Count</label></th>
+          <td>
+            <input name="dashboard-initial-activity-count" type="text" id="dashboard-initial-activity-count"
+          value="<?php echo get_option('dashboard-initial-activity-count', 20); ?>" />
+          </td>
+      </tr>
+      <tr valign="top">
+          <th scope="row"><label for="dashboard-activities-per-page">Activities Per Page</label></th>
+          <td>
+            <input name="dashboard-activities-per-page" type="text" id="dashboard-activities-per-page"
+          value="<?php echo get_option('dashboard-activities-per-page', 10); ?>" />
+          </td>
+      </tr>
+      
+    </table>
+    
+    <?php submit_button(); ?>
+  </form>
 </div>

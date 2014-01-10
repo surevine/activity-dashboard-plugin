@@ -25,6 +25,7 @@ register_activation_hook(__FILE__, array($activityDashboard, 'activate'), 1);
 
 if (true === is_admin()) {
     add_action('admin_menu', array($activityDashboard, 'adminMenu'), 1);
+    add_action('admin_init', array($activityDashboard, 'adminSettings'), 1);
 }
 
 add_action('the_posts', array($activityDashboard, 'isDashboardPage'));

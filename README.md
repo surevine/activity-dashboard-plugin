@@ -12,7 +12,7 @@ Works in conjunction with [surevine/activity-dashboard-service](https://github.c
 
 ## Configuration
 
-* You need to set the URL of the activity dashboard service under `Settings`, `Activity Dashboard Setup`.
+* You need to set the URL of the activity dashboard service under `Settings`, `Activity Dashboard`.
 
 ## Usage
 
