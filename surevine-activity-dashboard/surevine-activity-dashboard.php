@@ -9,8 +9,6 @@ Author URI: https://www.surevine.com
 License: GPLv3
 */
 
-global $wpdb;
-
 include __DIR__ . '/src/DashboardDatabaseInterface.php';
 include __DIR__ . '/src/DashboardDatabase.php';
 include __DIR__ . '/src/ActivityDashboard.php';
