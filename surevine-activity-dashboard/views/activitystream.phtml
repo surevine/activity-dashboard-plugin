@@ -3,7 +3,7 @@
 $count = count($params['activities']);
 $outputJson = '{ "count": '.$count.', "items": [';
 
-for ($i=1; $i<=$count; $i++) {
+for ($i=0; $i<=$count; $i++) {
   $activity = $params['activities'][$i];
   $outputJson .= $activity->data;
   if($i<($count-1)) {
