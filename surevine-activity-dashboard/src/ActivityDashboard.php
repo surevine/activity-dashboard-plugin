@@ -82,7 +82,9 @@ class ActivityDashboard
      * Render dashboard
      */
     public function display()
-    {               
+    { 
+      $this->loadScripts();
+      
       $activities = $this->_database->getActivities(get_option('dashboard-initial-activity-count', $this->defaultInitialActivityCount));      
       
       $this->render('/views/header.phtml');
@@ -95,10 +97,10 @@ class ActivityDashboard
      */
     protected function loadScripts()
     {
-      wp_enqueue_style('bootstrap', plugins_url('../assets/css/bootstrap.min.css', __FILE__));
+      // Styles
       wp_enqueue_style('activity-dashboard-stylesheet', plugins_url('../assets/css/activity-dashboard.css', __FILE__));
       
-      wp_enqueue_script('bootstrap', plugins_url('../assets/js/bootstrap.min.js', __FILE__), array('jquery'), false, false);
+      // Scripts
       wp_enqueue_script('bootstrap-button', plugins_url('../assets/js/bootstrap-button.min.js', __FILE__), array('jquery'), false, false);
       wp_enqueue_script('masonry', plugins_url('../assets/js/masonry.pkgd.min.js', __FILE__), array('jquery'), false, false);
       wp_enqueue_script('timeago', plugins_url('../assets/js/jquery.timeago.min.js', __FILE__), array('jquery'), false, false);
@@ -161,28 +163,9 @@ class ActivityDashboard
             header('HTTP', true, 404);
             die();
         }
-        
+      
         $this->render('/views/activitystream.phtml', array('activities' => $activities));
         die();
-    }
-    
-    /**
-     * Detects whether page contains shortcode (indicating that we need to include resources in head)
-     */
-    public function isDashboardPage($posts) {
-        
-        if(empty($posts)) {
-            return $posts;
-        }
-        
-        foreach ($posts as $post) {
-            if(strpos($post->post_content, '[surevine-activity-dashboard]') !== false) {
-                $this->loadScripts();
-                break;
-            }
-        }
-        
-        return $posts;
     }
   
 } 
