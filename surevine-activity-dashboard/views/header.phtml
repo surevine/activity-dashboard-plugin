@@ -15,6 +15,13 @@ jQuery(document).ready(function($) {
   $(".timeago").timeago();
 
   $container.masonry();
+  
+  // Handle connection issues
+  if(typeof io == 'undefined') {
+    $('#connection-error').removeClass('hide');
+    $('#load-activities').addClass('disabled');
+    return;
+  }
 
   var socket = io.connect('<?php echo get_option('dashboard-service-url'); ?>');
                           

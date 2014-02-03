@@ -157,6 +157,15 @@ article.box {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
+#connection-error {
+  margin-left: 30px;
+}
+
+#connection-error a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 /* Masonry */
 
 .masonry,
