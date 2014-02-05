@@ -15,6 +15,8 @@ include __DIR__ . '/src/ActivityDashboard.php';
 
 require_once __DIR__ . '/lib/Mustache/Autoloader.php';
 
+global $wpdb;
+
 $dashboardDatabase  = new DashboardDatabase($wpdb, $wpdb->prefix.'dashboard_activities');
 $activityDashboard = new ActivityDashboard($dashboardDatabase, __DIR__);
 
