@@ -5,13 +5,14 @@
     
     <?php settings_fields( 'surevine-activity-dashboard-options' ); ?>
     
+    <h3>Technical Options</h3>
     <table class="form-table">
-      
       <tr valign="top">
           <th scope="row"><label for="dashboard-service-url">Activity Service URL</label></th>
           <td>
             <input name="dashboard-service-url" type="text" id="dashboard-service-url"
           value="<?php echo get_option('dashboard-service-url'); ?>" class="regular-text" />
+            <p class="description">URL where the activity dashboard service is located</p>
           </td>
       </tr>
       <tr valign="top">
@@ -19,6 +20,7 @@
           <td>
             <input name="dashboard-initial-activity-count" type="text" id="dashboard-initial-activity-count"
           value="<?php echo get_option('dashboard-initial-activity-count', 20); ?>" />
+            <p class="description">Max number of activities to display on page load</p>
           </td>
       </tr>
       <tr valign="top">
@@ -26,9 +28,29 @@
           <td>
             <input name="dashboard-activities-per-page" type="text" id="dashboard-activities-per-page"
           value="<?php echo get_option('dashboard-activities-per-page', 10); ?>" />
+            <p class="description">Max number of activities to retrieve when 'more' button pressed</p>
           </td>
       </tr>
-      
+    </table>
+    
+    <h3>Wording Options</h3>
+    <table class="form-table">
+      <tr valign="top">
+          <th scope="row"><label for="dashboard-more-button-label">Load Activities Button Label</label></th>
+          <td>
+            <input name="dashboard-more-button-label" type="text" id="dashboard-more-button-label"
+          value="<?php echo get_option('dashboard-more-button-label', 'Load More Activities'); ?>" class="regular-text" />
+            <p class="description">Label for button to load more activities</p>
+          </td>
+      </tr>
+      <tr valign="top">
+          <th scope="row"><label for="no-activities-message">No Activities Message</label></th>
+          <td>
+            <input name="no-activities-message" type="text" id="no-activities-message"
+          value="<?php echo get_option('no-activities-message', 'Sorry there are currently no activities, please check back another time.'); ?>" class="regular-text" />
+            <p class="description">Message to display when no activities are found</p>
+          </td>
+      </tr>
     </table>
     
     <?php submit_button(); ?>

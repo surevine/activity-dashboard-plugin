@@ -68,6 +68,9 @@ class ActivityDashboard
       register_setting( 'surevine-activity-dashboard-options', 'dashboard-service-url' );
       register_setting( 'surevine-activity-dashboard-options', 'dashboard-initial-activity-count' );
       register_setting( 'surevine-activity-dashboard-options', 'dashboard-activities-per-page' );
+      
+      register_setting( 'surevine-activity-dashboard-options', 'dashboard-more-button-label' );
+      register_setting( 'surevine-activity-dashboard-options', 'no-activities-message' );
     }
     
     /**

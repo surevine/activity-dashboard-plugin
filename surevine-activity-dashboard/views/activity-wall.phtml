@@ -7,7 +7,7 @@
 
 <?php if (0 === count($params['activities'])) : ?>
 
-  <p id="no-activities">Sorry there are currently no activities, please check back another time.</p>
+  <p id="no-activities"><?php echo get_option('no-activities-message', 'Sorry there are currently no activities, please check back another time.'); ?></p>
 
 <?php else : ?>
 
